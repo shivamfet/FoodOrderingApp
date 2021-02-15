@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
         {
                 @NamedQuery(name = "getRestaurantsByRating" , query = "select restaurant from RestaurantEntity restaurant order by restaurant.customerRating desc"),
                 @NamedQuery(name = "getRestaurantByUUID" , query = "select restaurant from RestaurantEntity restaurant where restaurant.uuid = :uuid"),
-                @NamedQuery(name = "getRestaurantByUUID" , query = "select restaurant from RestaurantEntity restaurant where lower(restaurant.restaurantName) like :restaurantName")
+                @NamedQuery(name = "getRestaurantByName" , query = "select restaurant from RestaurantEntity restaurant where lower(restaurant.restaurantName) like :restaurantName")
         }
 )
 public class RestaurantEntity {

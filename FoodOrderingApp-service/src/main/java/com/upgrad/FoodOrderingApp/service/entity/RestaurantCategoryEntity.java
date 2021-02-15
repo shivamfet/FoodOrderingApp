@@ -7,7 +7,7 @@ import javax.persistence.*;
 @NamedQueries(
         {
                 @NamedQuery(name = "getCategoriesByRestaurant" ,query = "select restaurant_category from " +
-                        "RestaurantCategoryEntity restaurant_category where restaurant_category.restaurantEntity.uuid = :restaurantUUID order by  restaurant_category.categoryEntity.categoryName asc")
+                        "RestaurantCategoryEntity restaurant_category where restaurant_category.restaurantEntity.uuid = :restaurantUUID order by  restaurant_category.categoryEntity.categoryName asc"),
                 @NamedQuery(name = "getRestaurantsByCategory" ,query = "select restaurant_category from " +
                         "RestaurantCategoryEntity restaurant_category where restaurant_category.categoryEntity.uuid= :categoryUUID order by  restaurant_category.restaurantEntity.restaurantName asc")
         }

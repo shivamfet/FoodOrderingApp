@@ -128,8 +128,7 @@ public class RestaurantController {
     public ResponseEntity<RestaurantList> getRestaurantByUUID(@PathVariable(value = "restaurant_id") final String restaurantUUID ) throws RestaurantNotFoundException {
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUUID);
         List<CategoryEntity> categoryEntities = categoryService.getCategoriesByRestaurant(restaurantUUID);
-
-
+        return null;
     }
 
 
