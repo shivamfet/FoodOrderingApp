@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table (name = "category_item" , schema = "public")
 @NamedQueries(
         {
-                @NamedQuery(name = "getItemsByCategory" , query = "select category_item from CategoryItemEntity category_item where category_item.categoryEntity.uuid = :uuid")
+                @NamedQuery(name = "getItemsByCategory" , query = "select category_item from CategoryItemEntity category_item where category_item.categoryEntity.uuid = :uuid order by category_item.categoryEntity.categoryName")
         }
 )
 public class CategoryItemEntity {

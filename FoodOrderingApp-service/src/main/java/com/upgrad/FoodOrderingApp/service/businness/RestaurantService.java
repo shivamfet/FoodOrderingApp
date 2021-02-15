@@ -27,7 +27,8 @@ public class RestaurantService {
     private RestaurantCategoryDao restaurantCategoryDao;
 
     public List<RestaurantEntity> restaurantsByRating() {
-        return restaurantDao.getRestaurantsByRating();
+        List<RestaurantEntity> restaurantEntities = restaurantDao.getRestaurantsByRating();
+        return restaurantEntities;
     }
 
     public RestaurantEntity restaurantByUUID(final String uuid) throws RestaurantNotFoundException {
@@ -62,10 +63,12 @@ public class RestaurantService {
 
     public RestaurantEntity updateRestaurantRating(RestaurantEntity restaurantEntity , Double rating) throws RestaurantNotFoundException, InvalidRatingException {
 
-        if (rating < 1 || rating < 5) {
+        if (rating < 1 || rating > 5) {
             throw new InvalidRatingException("IRE-001" , "Restaurant should be in the range of 1 to 5");
         }
-        restaurantEntity.setCustomerRating(rating);
+        double totalRating = restaurantEntity.getCustomerRating() * restaurantEntity.getNumberCustomersRated();
+        restaurantEntity.setCustomerRating((totalRating + rating) / (restaurantEntity.getNumberCustomersRated() + 1));
+        restaurantEntity.setNumberCustomersRated(restaurantEntity.getNumberCustomersRated() + 1);
         return restaurantDao.updateRating(restaurantEntity);
     }
 

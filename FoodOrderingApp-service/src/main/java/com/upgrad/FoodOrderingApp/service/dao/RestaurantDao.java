@@ -17,7 +17,8 @@ public class RestaurantDao {
 
     public List<RestaurantEntity> getRestaurantsByRating() {
         try {
-            return entityManager.createNamedQuery("getRestaurantsByRating" , RestaurantEntity.class).getResultList();
+            List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("getRestaurantsByRating" , RestaurantEntity.class).getResultList();
+            return restaurantEntities;
         } catch (NoResultException e) {
             return null;
         }
@@ -32,7 +33,7 @@ public class RestaurantDao {
     }
 
     public List<RestaurantEntity> getRestaurantsByName(final String restaurantName) {
-        return entityManager.createNamedQuery("getRestaurantsByName" , RestaurantEntity.class).setParameter("restaurantName" , RestaurantEntity.class).getResultList();
+        return entityManager.createNamedQuery("getRestaurantsByName" , RestaurantEntity.class).setParameter("restaurantName" , restaurantName).getResultList();
     }
 
     public RestaurantEntity updateRating(RestaurantEntity restaurantEntity) {
