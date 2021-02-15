@@ -6,7 +6,12 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "customer_auth" , schema = "public")
-public class CustomerAuth {
+@NamedQueries(
+        {
+            @NamedQuery(name = "customerAuthByAccessToken" , query = "select customerAuth from CustomerAuthEntity customerAuth where customerAuth.accessToken = :accessToken")
+        }
+)
+public class CustomerAuthEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +23,7 @@ public class CustomerAuth {
 
     @Column(name = "access_token" )
     @Size(max = 500)
-    private String access_token;
+    private String accessToken;
 
     @Column(name = "login_at")
     ZonedDateTime loginAt;
@@ -31,7 +36,7 @@ public class CustomerAuth {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    Customer customer;
+    CustomerEntity customer;
 
     public Integer getId() {
         return id;
@@ -49,17 +54,17 @@ public class CustomerAuth {
         this.uuid = uuid;
     }
 
-    public String getAccess_token() {
-        return access_token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public ZonedDateTime getLoginAt() {
         return loginAt;
-    }
+        }
 
     public void setLoginAt(ZonedDateTime loginAt) {
         this.loginAt = loginAt;
@@ -81,11 +86,11 @@ public class CustomerAuth {
         this.expiresAt = expiresAt;
     }
 
-    public Customer getCustomer() {
+    public CustomerEntity getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerEntity customer) {
         this.customer = customer;
     }
 }

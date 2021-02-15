@@ -5,7 +5,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "category" , schema = "public")
-public class Category {
+@NamedQueries({
+        @NamedQuery(name = "getCategoryByUUID" , query = "select categoryEntity from CategoryEntity categoryEntity where categoryEntity.uuid = :uuid")
+})
+public class CategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "restaurant_item" , schema = "public")
-public class RestaurantItem {
+public class RestaurantItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,11 +12,11 @@ public class RestaurantItem {
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-    Item item;
+    ItemEntity itemEntity;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    Restaurant restaurant;
+    RestaurantEntity restaurantEntity;
 
     public Integer getId() {
         return id;
@@ -26,19 +26,19 @@ public class RestaurantItem {
         this.id = id;
     }
 
-    public Item getItem() {
-        return item;
+    public ItemEntity getItemEntity() {
+        return itemEntity;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemEntity(ItemEntity itemEntity) {
+        this.itemEntity = itemEntity;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public RestaurantEntity getRestaurantEntity() {
+        return restaurantEntity;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurantEntity(RestaurantEntity restaurantEntity) {
+        this.restaurantEntity = restaurantEntity;
     }
 }

@@ -6,7 +6,10 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "orders" , schema = "public")
-public class Order {
+@NamedQueries({
+        @NamedQuery(name = "getOrdersDeliveredRoAnAddress" , query = "select count(orders) from OrderEntity orders where orders.addressEntity.uuid = :uuid " )
+})
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +24,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "coupon_id")
-    private Coupon coupon;
+    private CouponEntity couponEntity;
 
     @Column(name = "discount")
     private Double discount;
@@ -31,19 +34,19 @@ public class Order {
 
     @OneToOne
     @JoinColumn(name = "payment_id")
-    Payment payment;
+    PaymentEntity paymentEntity;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    Customer customer;
+    CustomerEntity customerEntity;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
-    Address address;
+    AddressEntity addressEntity;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    Restaurant restaurant;
+    RestaurantEntity restaurantEntity;
 
     public Integer getId() {
         return id;
@@ -69,12 +72,12 @@ public class Order {
         this.bill = bill;
     }
 
-    public Coupon getCoupon() {
-        return coupon;
+    public CouponEntity getCouponEntity() {
+        return couponEntity;
     }
 
-    public void setCoupon(Coupon coupon) {
-        this.coupon = coupon;
+    public void setCouponEntity(CouponEntity couponEntity) {
+        this.couponEntity = couponEntity;
     }
 
     public Double getDiscount() {
@@ -93,35 +96,35 @@ public class Order {
         this.date = date;
     }
 
-    public Payment getPayment() {
-        return payment;
+    public PaymentEntity getPaymentEntity() {
+        return paymentEntity;
     }
 
-    public void setPayment(Payment payment) {
-        this.payment = payment;
+    public void setPaymentEntity(PaymentEntity paymentEntity) {
+        this.paymentEntity = paymentEntity;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public CustomerEntity getCustomerEntity() {
+        return customerEntity;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerEntity(CustomerEntity customerEntity) {
+        this.customerEntity = customerEntity;
     }
 
-    public Address getAddress() {
-        return address;
+    public AddressEntity getAddressEntity() {
+        return addressEntity;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressEntity(AddressEntity addressEntity) {
+        this.addressEntity = addressEntity;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public RestaurantEntity getRestaurantEntity() {
+        return restaurantEntity;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurantEntity(RestaurantEntity restaurantEntity) {
+        this.restaurantEntity = restaurantEntity;
     }
 }

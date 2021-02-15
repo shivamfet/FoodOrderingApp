@@ -97,7 +97,7 @@
 
                 <executions>
                     <execution>
-                        <id>customer</id>
+                        <id>customerEntity</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -107,7 +107,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>restaurant</id>
+                        <id>restaurantEntity</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -127,7 +127,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>address</id>
+                        <id>addressEntity</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -137,7 +137,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>category</id>
+                        <id>categoryEntity</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -147,7 +147,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>item</id>
+                        <id>itemEntity</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -157,7 +157,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>payment</id>
+                        <id>paymentEntity</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>

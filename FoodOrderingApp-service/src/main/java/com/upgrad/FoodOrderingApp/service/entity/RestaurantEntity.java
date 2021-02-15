@@ -5,7 +5,14 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "restaurant" , schema = "public")
-public class Restaurant {
+@NamedQueries(
+        {
+                @NamedQuery(name = "getRestaurantsByRating" , query = "select restaurant from RestaurantEntity restaurant order by restaurant.customerRating desc"),
+                @NamedQuery(name = "getRestaurantByUUID" , query = "select restaurant from RestaurantEntity restaurant where restaurant.uuid = :uuid"),
+                @NamedQuery(name = "getRestaurantByUUID" , query = "select restaurant from RestaurantEntity restaurant where lower(restaurant.restaurantName) like :restaurantName")
+        }
+)
+public class RestaurantEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +39,7 @@ public class Restaurant {
 
     @OneToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    private Address address;
+    private AddressEntity addressEntity;
 
     public Integer getId() {
         return id;
@@ -58,11 +65,11 @@ public class Restaurant {
         this.restaurantName = restaurantName;
     }
 
-    public String getPhoto_url() {
+    public String getPhotoUrl() {
         return photo_url;
     }
 
-    public void setPhoto_url(String photo_url) {
+    public void setPhotoUrl(String photo_url) {
         this.photo_url = photo_url;
     }
 
@@ -74,27 +81,27 @@ public class Restaurant {
         this.customerRating = customerRating;
     }
 
-    public Integer getAveragePriceForTwo() {
+    public Integer getAvgPrice() {
         return averagePriceForTwo;
     }
 
-    public void setAveragePriceForTwo(Integer averagePriceForTwo) {
+    public void setAvgPrice(Integer averagePriceForTwo) {
         this.averagePriceForTwo = averagePriceForTwo;
     }
 
-    public Integer getNumberOfCustomersRated() {
+    public Integer getNumberCustomersRated() {
         return numberOfCustomersRated;
     }
 
-    public void setNumberOfCustomersRated(Integer numberOfCustomersRated) {
+    public void setNumberCustomersRated(Integer numberOfCustomersRated) {
         this.numberOfCustomersRated = numberOfCustomersRated;
     }
 
-    public Address getAddress() {
-        return address;
+    public AddressEntity getAddress() {
+        return addressEntity;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddress(AddressEntity addressEntity) {
+        this.addressEntity = addressEntity;
     }
 }

@@ -2,12 +2,15 @@ package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "address" , schema = "public")
-public class Address {
+@NamedQueries (
+        {
+                @NamedQuery(name = "getAddressByUUID" , query = "select a from AddressEntity a where a.uuid = :uuid"),
+        }
+)
+public class AddressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +34,26 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "state_id")
-    private State state;
+    private StateEntity stateEntity;
 
     @Column(name = "pincode")
     @Size(max = 30)
     String pincode;
+
+    @Column(name = "active")
+    Integer isActive;
+
+    public AddressEntity() {
+
+    }
+
+    public AddressEntity(String addressId, String s, String someLocality, String someCity, String s1, StateEntity stateEntity) {
+        this.uuid = addressId;
+        this.setLocality(someLocality);
+        this.setCity(someCity);
+        this.setFlatBuilNumber(s);
+        this.setState(stateEntity);
+    }
 
     public Integer getId() {
         return id;
@@ -77,12 +95,12 @@ public class Address {
         this.city = city;
     }
 
-    public State getState() {
-        return state;
+    public StateEntity getState() {
+        return stateEntity;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setState(StateEntity stateEntity) {
+        this.stateEntity = stateEntity;
     }
 
     public String getPincode() {
@@ -91,5 +109,13 @@ public class Address {
 
     public void setPincode(String pincode) {
         this.pincode = pincode;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 }
