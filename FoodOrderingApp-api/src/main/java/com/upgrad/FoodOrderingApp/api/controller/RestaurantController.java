@@ -130,31 +130,37 @@ public class RestaurantController {
         return new ResponseEntity<RestaurantListResponse>(restaurantListResponse , HttpStatus.OK);
     }
 
-//    @RequestMapping(method = RequestMethod.GET , path = "/restaurant/{restaurant_id}" , produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public ResponseEntity<RestaurantDetailsResponse> getRestaurantByUUID(@PathVariable(value = "restaurant_id") final String restaurantUUID ) throws RestaurantNotFoundException {
-//        RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUUID);
-//        List<CategoryEntity> categoryEntities = categoryService.getCategoriesByRestaurant(restaurantUUID);
-//
-//        RestaurantDetailsResponse restaurantDetailsResponse = new RestaurantDetailsResponse()
-//                                                            .id(UUID.fromString(restaurantEntity.getUuid()))
-//                                                            .restaurantName(restaurantEntity.getRestaurantName())
-//                                                            .photoURL(restaurantEntity.getPhotoUrl())
-//                                                            .customerRating(BigDecimal.valueOf(restaurantEntity.getCustomerRating()))
-//                                                            .averagePrice(restaurantEntity.getAvgPrice())
-//                                                            .numberCustomersRated(restaurantEntity.getNumberCustomersRated())
-//                                                            .categories(categoryEntities.stream().map(categoryEntity ->
-//                                                                    new CategoryDetailsResponse()
-//                                                                            .categoryName(categoryEntity.getCategoryName())
-//                                                                            .itemList((itemService.getItemsByCategoryAndRestaurant(categoryEntity.getUuid() , restaurantUUID))
-//                                                                                    .stream().map(itemEntity ->
-//                                                                                            new ItemList().id(UUID.fromString(itemEntity.getUuid()))
-//                                                                                                          .itemName(itemEntity.getItemName())
-//                                                                                                          .itemType(ItemList.ItemTypeEnum.valueOf(itemEntity.getType().getValue()))
-//                                                                                                          .price(itemEntity.getPrice())).collect(Collectors.toList()))).collect(Collectors.toList())
-//
-//
-//        return null;
-//    }
+    @RequestMapping(method = RequestMethod.GET , path = "/restaurant/{restaurant_id}" , produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<RestaurantDetailsResponse> getRestaurantByUUID(@PathVariable(value = "restaurant_id") final String restaurantUUID ) throws RestaurantNotFoundException {
+        RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUUID);
+        List<CategoryEntity> categoryEntities = categoryService.getCategoriesByRestaurant(restaurantUUID);
+
+        CategoryDetailsResponse categoryDetailsResponse = new CategoryDetailsResponse();
+
+        RestaurantDetailsResponse restaurantDetailsResponse = new RestaurantDetailsResponse()
+                                                            .id(UUID.fromString(restaurantEntity.getUuid()))
+                                                            .restaurantName(restaurantEntity.getRestaurantName())
+                                                            .photoURL(restaurantEntity.getPhotoUrl())
+                                                            .customerRating(BigDecimal.valueOf(restaurantEntity.getCustomerRating()))
+                                                            .averagePrice(restaurantEntity.getAvgPrice())
+                                                            .numberCustomersRated(restaurantEntity.getNumberCustomersRated())
+                                                            .categories(categoryEntities.stream().map(categoryEntity ->
+                                                                new CategoryList()
+                                                                        .categoryName(categoryEntity.getCategoryName())
+                                                                        .itemList(itemService.getItemsByCategoryAndRestaurant(restaurantUUID , categoryEntity.getUuid())
+                                                                                .stream().map(itemEntity ->
+                                                                                        new ItemList().id(UUID.fromString(itemEntity.getUuid()))
+                                                                                                .itemName(itemEntity.getItemName())
+                                                                                                .itemType(ItemList.ItemTypeEnum.valueOf(itemEntity.getType().getValue()))
+                                                                                                .price(itemEntity.getPrice())).collect(Collectors.toList()))).collect(Collectors.toList()));
+
+        return new ResponseEntity<RestaurantDetailsResponse>(restaurantDetailsResponse , HttpStatus.OK);
+
+
+
+
+
+    }
 
     @RequestMapping(method = RequestMethod.PUT , path = "/restaurant/{restaurant_id}" , params = "customer_rating" , produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantUpdatedResponse> updateRestaurant(@RequestHeader("authorization") final String authorization , @PathVariable(value = "restaurant_id") final String restaurantUUID , @RequestParam(value = "customer_rating")final Double customerRating) throws AuthorizationFailedException, RestaurantNotFoundException, InvalidRatingException {
