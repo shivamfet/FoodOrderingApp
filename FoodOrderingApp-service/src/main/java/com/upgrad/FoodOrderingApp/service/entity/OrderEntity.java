@@ -1,5 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
+import org.springframework.context.annotation.EnableMBeanExport;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
@@ -7,7 +9,8 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "orders" , schema = "public")
 @NamedQueries({
-        @NamedQuery(name = "getOrdersDeliveredRoAnAddress" , query = "select count(orders) from OrderEntity orders where orders.addressEntity.uuid = :uuid " )
+        @NamedQuery(name = "getOrdersDeliveredRoAnAddress" , query = "select count(orders) from OrderEntity orders where orders.addressEntity.uuid = :uuid " ),
+        @NamedQuery(name = "getOrdersByRestaurant" , query = "select order from OrderEntity order where order.restaurantEntity.uuid = :restaurantUUID")
 })
 public class OrderEntity {
 
