@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.awt.event.WindowAdapter;
+import java.util.List;
 
 @Repository
 public class CategoryDao {
@@ -21,6 +22,14 @@ public class CategoryDao {
             } catch (NoResultException e) {
                 return null;
             }
+    }
+
+    public List<CategoryEntity> getAllCategories() {
+        try {
+            return entityManager.createNamedQuery("getAllCategories" , CategoryEntity.class).getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
 }
